@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Grid</title>
+
+    <style>
+        pre {
+            background-color: #fff;
+            color: #000;
+            margin: 0px;
+            line-height: 16px;
+        }
+
+        #output-area,
+        #input-area,
+        #input-area:active {
+            background-color: #fff;
+            white-space: pre;
+            color: #000;
+            padding: 6px;
+        }
+        #input-area {
+            /*margin-left: 15px;*/
+            border: none;
+        }
+        #input-area:active,
+        #input-area:focus {
+            border: none;
+            outline: 0px solid transparent;
+        }
+        /*#input-area::before {*/
+        /*    content: "$ ";*/
+        /*    display: block;*/
+        /*    margin-left: -21px;*/
+        /*    margin-top: -6px;*/
+        /*    background-color: #000;*/
+        /*    padding: 6px;*/
+        /*    position: absolute;*/
+        /*}*/
+    </style>
+</head>
+<body>
+
+<div>
+    <pre id="input-area" contenteditable="true"></pre>
+    <hr/>
+    <pre id="output-area"></pre>
+</div>
+
+<script>
+    var ws;
+
+    window.addEventListener('load', (e) => {
+        let outputArea = document.getElementById('output-area');
+        let input = document.getElementById('input-area');
+        let typedKeys = {};
+        input.focus();
+
+        ws = new WebSocket('ws://127.0.0.1:8004');
+        ws.addEventListener('open', (event) => {
+            // ws.send('ls');
+        });
+        ws.addEventListener('message', (event) => {
+            outputArea.innerHTML = (event.data);
+        });
+
+        input.addEventListener('keydown', event => typedKeys[event.key] = true);
+        input.addEventListener('keyup', (event) => {
+            let keyName = event.key;
+
+            if (!typedKeys.Control || !typedKeys.Enter) {
+                return;
+            }
+
+            event.preventDefault();
+
+            let message = input.innerText;
+
+            typedKeys[keyName] = false;
+
+            if (message.length > 0) {
+                ws.send(message);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

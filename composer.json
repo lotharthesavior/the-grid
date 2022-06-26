@@ -1,0 +1,29 @@
+{
+    "name": "kanata/the-grid",
+    "description": "The Grid. A digital frontier. I tried to picture clusters of information as they moved through the computer. What did they look like? Ships, motorcycles? Were the circuits like freeways? I kept dreaming of a world I thought I'd never see. And then, one day I got in...",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Kanata\\TheGrid\\": "src/",
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Savio Resende",
+            "email": "savio@savioresende.com"
+        }
+    ],
+    "require": {
+        "spatie/data-transfer-object": "^3.8",
+        "phpseclib/phpseclib": "^3.0",
+        "symfony/validator": "^6.1",
+        "textalk/websocket": "^1.5",
+        "symfony/console": "^6.1",
+        "vlucas/phpdotenv": "^5.4",
+        "mockery/mockery": "^1.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
